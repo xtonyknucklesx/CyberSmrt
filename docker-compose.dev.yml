@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  backend:
+    environment:
+      - DEBUG=True
+    volumes:
+      - ./backend:/app
+      - ./backend/logs:/app/logs
+  frontend:
+    volumes:
+      - ./frontend:/app

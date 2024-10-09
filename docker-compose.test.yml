@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  backend:
+    environment:
+      - TESTING=True
+      - DATABASE_URL=postgresql://user:password@db:5432/mydatabase_test
+  db:
+    environment:
+      - POSTGRES_DB=mydatabase_test
