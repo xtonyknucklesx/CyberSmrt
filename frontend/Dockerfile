@@ -1,5 +1,5 @@
-# Use the official Node.js image
-FROM node:18 as build
+# Use the official Node.js image as the base
+FROM node:18
 
 # Set the working directory
 WORKDIR /app
@@ -13,15 +13,18 @@ RUN npm install
 # Copy the rest of the app's code
 COPY . .
 
-# Build the React app for production
-RUN npm run build
+# Set the environment variable for the default environment (can be overridden)
+ARG NODE_ENV=production
+ENV NODE_ENV=$NODE_ENV
 
-# Use a different lightweight web server for serving static files
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+# Run different commands based on the environment
+# For production, build the app; for development, run the development server
+RUN if [ "$NODE_ENV" = "production" ]; then \
+      npm run build; \
+    fi
 
-# Expose port 80
-EXPOSE 80
+# Expose the port based on the environment
+EXPOSE 3000
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# The default command will be overridden in docker-compose.yml files for different environments
+CMD ["npm", "start"]

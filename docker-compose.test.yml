@@ -1,23 +1,48 @@
 services:
-  backend:
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NODE_ENV: test
+    container_name: frontend_test
     env_file:
       - .env.test
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./frontend:/app
+    command: ["npm", "test", "--", "--watchAll=false"]
+  
+  backend:
+    build:
+      context: ./backend
+      args:
+        NODE_ENV: test
+    container_name: backend_test
+    env_file:
+      - .env.test
+    environment:
+      - NODE_ENV=test
     volumes:
       - ./backend:/app
       - ./backend/logs:/app/logs
+    depends_on:
+      - db
+    command: ["pytest", "--disable-warnings"]
   
   db:
     container_name: db_test
+    image: postgres:15
     env_file:
       - .env.test
     ports:
       - "5433:5432"
     volumes:
       - db_test:/var/lib/postgresql/data
-
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+
 volumes:
   db_test:
