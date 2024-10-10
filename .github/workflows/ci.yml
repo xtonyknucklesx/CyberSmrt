@@ -30,12 +30,16 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         run: |
+          # Determine which .env file to create based on the branch
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
             ENV_FILE=".env.dev"
           elif [ "${{ github.ref }}" == "refs/heads/test" ]; then
             ENV_FILE=".env.test"
           elif [ "${{ github.ref }}" == "refs/heads/prod" ]; then
             ENV_FILE=".env.prod"
+          else
+            echo "Branch not recognized. Exiting..."
+            exit 1
           fi
           echo DATABASE_URL=${DATABASE_URL} >> $ENV_FILE
           echo DEBUG=${DEBUG} >> $ENV_FILE
