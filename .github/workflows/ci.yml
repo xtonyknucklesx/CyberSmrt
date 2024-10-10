@@ -39,7 +39,7 @@ jobs:
           # Determine the branch name from the environment variable
           BRANCH_NAME=${GITHUB_REF}
 
-          if [ -z "$BRANCH_NAME"; then
+          if [ -z "$BRANCH_NAME" ]; then
             echo "GITHUB_REF is not set. Exiting..."
             exit 1
           fi
