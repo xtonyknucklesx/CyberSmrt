@@ -22,6 +22,20 @@ jobs:
       - name: Set up Docker Compose
         run: sudo apt-get update && sudo apt-get install -y docker-compose
 
+      - name: Set environment variables from GitHub Secrets
+          env:
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            DEBUG: ${{ secrets.DEBUG }}
+            POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+            POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          run: |
+            echo DATABASE_URL=${DATABASE_URL} >> .env.test
+            echo DEBUG=${DEBUG} >> .env.test
+            echo POSTGRES_USER=${POSTGRES_USER} >> .env.test
+            echo POSTGRES_PASSWORD=${POSTGRES_PASSWORD} >> .env.test
+            echo POSTGRES_DB=${POSTGRES_DB} >> .env.test
+
       - name: Make run-tests.sh executable
         run: chmod +x run-tests.sh
 
