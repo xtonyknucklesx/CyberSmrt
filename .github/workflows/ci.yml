@@ -46,6 +46,8 @@ jobs:
             ENV_FILE=".env.test"
           elif [ "$BRANCH_NAME" == "refs/heads/prod" ]; then
             ENV_FILE=".env.prod"
+          elif [ "$BRANCH_NAME" == "refs/heads/main" ]; then
+            ENV_FILE=".env.main"
           else
             echo "Branch not recognized: $BRANCH_NAME. Exiting..."
             exit 1
