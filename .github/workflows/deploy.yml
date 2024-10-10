@@ -1,0 +1,40 @@
+name: Push to Environment Branches
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - test
+      - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Deploy to Development Branch
+        if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[deploy:dev]')
+        run: |
+          git checkout -b dev
+          git push origin dev --force
+
+      - name: Deploy to Testing Branch
+        if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[deploy:test]')
+        run: |
+          git checkout -b test
+          git push origin test --force
+
+      - name: Deploy to Production Branch
+        if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[deploy:prod]')
+        run: |
+          git checkout -b prod
+          git push origin prod --force
