@@ -60,11 +60,17 @@ jobs:
 
           # Create the .env file in the repository root
           FILE_PATH="${GITHUB_WORKSPACE}/${ENV_FILE}"
+          touch $FILE_PATH
+
+          # Write environment variables
           echo DATABASE_URL=${DATABASE_URL} >> $FILE_PATH
           echo DEBUG=${DEBUG} >> $FILE_PATH
           echo POSTGRES_USER=${POSTGRES_USER} >> $FILE_PATH
           echo POSTGRES_PASSWORD=${POSTGRES_PASSWORD} >> $FILE_PATH
           echo POSTGRES_DB=${POSTGRES_DB} >> $FILE_PATH
+
+          # Verify .env file was created
+          ls -l $FILE_PATH
 
       - name: Make run-tests.sh executable
         run: chmod +x run-tests.sh
