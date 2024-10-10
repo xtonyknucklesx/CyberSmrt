@@ -2,4 +2,5 @@ fastapi
 uvicorn
 sqlalchemy
 python-dotenv
+email-validator
 # Add other dependencies here

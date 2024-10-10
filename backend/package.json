@@ -4,17 +4,20 @@
     "description": "Backend service for the project using FastAPI",
     "main": "index.js",
     "scripts": {
-      "start": "uvicorn app.main:app --host 0.0.0.0 --port 8000",
-      "dev": "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
-      "lint": "eslint .",
-      "format": "prettier --write .",
-      "test": "echo \"No test specified\" && exit 0"
+        "start": "uvicorn app.main:app --host 0.0.0.0 --port 8000",
+        "dev": "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "test": "echo \"No test specified\" && exit 0"
     },
     "keywords": [],
     "author": "Your Name",
     "license": "MIT",
     "devDependencies": {
-      "eslint": "^8.50.0",
-      "prettier": "^3.0.0"
+        "eslint": "^8.50.0",
+        "prettier": "^3.0.0"
+    },
+    "dependencies": {
+        "email-validator": "^2.0.4"
     }
-  }  
+}

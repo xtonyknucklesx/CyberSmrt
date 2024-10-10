@@ -12,5 +12,13 @@ services:
       - "80:80"
   
   db:
+    container_name: db_prod
+    ports:
+      - "5434:5432"
+    volumes:
+      -db_prod:/var/lib/postgresql/data
     env_file:
       .env.prod
+
+volumes:
+  db_prod:
