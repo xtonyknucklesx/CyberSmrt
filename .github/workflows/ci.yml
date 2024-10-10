@@ -57,11 +57,14 @@ jobs:
             echo "Branch not recognized: $BRANCH_NAME. Exiting..."
             exit 1
           fi
-          echo DATABASE_URL=${DATABASE_URL} >> $ENV_FILE
-          echo DEBUG=${DEBUG} >> $ENV_FILE
-          echo POSTGRES_USER=${POSTGRES_USER} >> $ENV_FILE
-          echo POSTGRES_PASSWORD=${POSTGRES_PASSWORD} >> $ENV_FILE
-          echo POSTGRES_DB=${POSTGRES_DB} >> $ENV_FILE
+
+          # Create the .env file in the repository root
+          FILE_PATH="${GITHUB_WORKSPACE}/${ENV_FILE}"
+          echo DATABASE_URL=${DATABASE_URL} >> $FILE_PATH
+          echo DEBUG=${DEBUG} >> $FILE_PATH
+          echo POSTGRES_USER=${POSTGRES_USER} >> $FILE_PATH
+          echo POSTGRES_PASSWORD=${POSTGRES_PASSWORD} >> $FILE_PATH
+          echo POSTGRES_DB=${POSTGRES_DB} >> $FILE_PATH
 
       - name: Make run-tests.sh executable
         run: chmod +x run-tests.sh
