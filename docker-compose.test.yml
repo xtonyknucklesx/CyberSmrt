@@ -11,7 +11,6 @@ services:
       - NODE_ENV=test
     volumes:
       - ./frontend:/app
-    tty: true
     command: ["npm", "test", "--", "--watchAll=false", "--passWithNoTests"]
   
   backend:
@@ -29,7 +28,6 @@ services:
       - ./backend/logs:/app/logs
     depends_on:
       - db
-    tty: true
     command: ["pytest", "tests/", "--disable-warnings"]
   
   db:
