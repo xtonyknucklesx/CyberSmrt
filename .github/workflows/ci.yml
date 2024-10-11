@@ -68,9 +68,9 @@ jobs:
       - name: Make run-tests.sh executable
         run: chmod +x run-tests.sh
 
-     # - name: Run the test script
-     #   working-directory: ${{ github.workspace }}
-     #   run: ./run-tests.sh
+      - name: Run the test script
+        working-directory: ${{ github.workspace }}
+        run: ./run-tests.sh
      #   env:
      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
      #     DEBUG: ${{ secrets.DEBUG }}
