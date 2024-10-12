@@ -27,7 +27,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
-      - name: Create .env file based on environment      
+      - name: Create .env file based on environment
         run: |
           # Determine the branch name from the environment variable
           BRANCH_NAME=${GITHUB_REF}
@@ -55,15 +55,19 @@ jobs:
           FILE_PATH="${GITHUB_WORKSPACE}/${ENV_FILE}"
           touch $FILE_PATH
 
-          # Write environment variables
+          # Write environment variables to the .env file
           echo "DATABASE_URL=${DATABASE_URL}" >> $FILE_PATH
           echo "DEBUG=${DEBUG}" >> $FILE_PATH
           echo "POSTGRES_USER=${POSTGRES_USER}" >> $FILE_PATH
           echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> $FILE_PATH
           echo "POSTGRES_DB=${POSTGRES_DB}" >> $FILE_PATH
 
-          # Verify .env file was created
-          ls -l $FILE_PATH
+          # Verify the .env file was created
+          echo "Contents of ${ENV_FILE}:"
+          cat $FILE_PATH
+          
+          # Create a symbolic link to .env if needed
+          ln -sf $FILE_PATH "${GITHUB_WORKSPACE}/.env"
 
       - name: Make run-tests.sh executable
         run: chmod +x run-tests.sh
