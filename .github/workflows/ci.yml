@@ -65,9 +65,11 @@ jobs:
           # Verify the .env file was created
           echo "Contents of ${ENV_FILE}:"
           cat $FILE_PATH
-          
-          # Create a symbolic link to .env if needed
-          ln -sf $FILE_PATH "${GITHUB_WORKSPACE}/.env"
+
+          # Create a symbolic link to .env if the script expects .env instead of .env.test
+          if [ "$ENV_FILE" == ".env.test" ]; then
+            ln -sf $FILE_PATH "${GITHUB_WORKSPACE}/.env"
+          fi
 
       - name: Make run-tests.sh executable
         run: chmod +x run-tests.sh
